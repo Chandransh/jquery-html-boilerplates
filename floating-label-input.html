@@ -1,0 +1,133 @@
+<!-- Created by Chandransh Srivastava -->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Floating Label using jQuery</title>
+        <meta name="author" content="Chandransh Srivastava"/>
+        <style type="text/css">
+            /*Stylish input (Starts)*/
+            .input {
+                position: relative;
+                z-index: 1;
+                display: inline-block;
+                width: 100%;
+                vertical-align: top;
+                float: left;
+                margin-top: 25px;
+            }
+            .input>input {
+                float: left;
+                clear: both;
+                width: 100%;
+                border: none;
+                border-radius: 0;
+                background: transparent;
+                color: #262626;
+                border-bottom: 1px solid #ccc;
+                font-weight: normal;
+                -webkit-appearance: none; /* for box shadows to show on iOS */
+                position: absolute;
+                top: 0;
+                left: 0;
+                z-index: 10;
+                display: block;
+                padding: 0;
+                height: 100%;
+                text-align: left;
+            }
+            .input>input:focus {
+                outline: none;
+                border-bottom: 1px solid #262626;
+            }
+            .input>label {
+                display: inline-block;
+                float: right;
+                font-size: 16px;
+                min-height: 30px; /*To prevent collapse in case no label is present*/
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+                -webkit-touch-callout: none;
+                -webkit-user-select: none;
+                -khtml-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+                padding: 0;
+                width: 100%;
+                background: transparent;
+                color: #262626;
+                cursor: text;
+                text-align: left;
+                position: relative;
+            }
+            .input>label::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: transparent;
+            }
+            .input>label>span {
+                position: relative;
+                display: block;
+                padding: 5px 0;
+                width: 100%;
+                color: #9b9b9b;
+                top: 0;
+                -webkit-transition: top 200ms;
+                -moz-transition: top 200ms;
+                -o-transition: top 200ms;
+                -ms-transition: top 200ms;
+                transition: top 200ms;
+            }
+            .input>input:focus + label {
+                top: 0;
+                cursor: default;
+                pointer-events: none;
+            }
+            .input>input:focus + label span {
+                top: -23px;
+                color: #9b9b9b;
+            }
+            /*Stylish input (Ends)*/
+        </style>
+    </head>
+    <body>
+        <section>
+            <span class="input">
+                <input type="text" name="text" autoComplete="on"/>
+                <label for="input">
+                    <span>Enter something here to see the action</span>
+                </label>
+            </span>
+        </section>
+        
+        <script src="https://code.jquery.com/jquery-3.0.0.min.js"
+                integrity="sha256-JmvOoLtYsmqlsWxa7mDSLMwa6dZ9rrIdtrrVYRnDRH0="
+                crossorigin="anonymous"></script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                /*For floating labels in stylish input (Starts)*/
+                var input = $('.input input');
+                function floatLabel(ele) {
+                    (ele.val() === "") ? ele.siblings('label').children().css('top', '') : ele.siblings('label').children().css('top', '-23px');
+                }
+                //if form is already filled, move labels up and vice versa
+                input.each(function() {
+                    floatLabel($(this));
+                });
+                //float labels on user input
+                input.on('keyup change', function(e) {
+                    e.stopPropagation();
+                    floatLabel($(this));
+                });
+                /*For floating labels in stylish input (Ends)*/
+            });
+        </script>
+    </body>
+</html>
