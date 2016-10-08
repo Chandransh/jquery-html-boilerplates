@@ -1,0 +1,151 @@
+<!-- Created by Chandransh Srivastava -->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Simple Slider using jQuery</title>
+        <meta name="author" content="Chandransh Srivastava"/>
+        <style type="text/css">
+            /*Slider (Starts)*/
+            #slider {
+                position: relative;
+                overflow: hidden;
+                margin: 0 auto;
+                z-index: 1;
+            }
+            #slider ul {
+                position: relative;
+                margin: 0;
+                padding: 0;
+                height: 250px;
+                list-style: none;
+            }
+            #slider ul li {
+                position: relative;
+                display: block;
+                float: left;
+                margin: 0;
+                padding: 10px 0 0;
+                width: 500px;
+                height: 250px;
+                text-align: center;
+                line-height: 24px;
+                -webkit-box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                box-sizing: border-box;
+            }
+            #slider ul li>p {
+                margin: 0;
+                padding: 0 40px 0;
+            }
+            a.control_prev, a.control_next {
+                position: absolute;
+                top: 28%;
+                display: block;
+                z-index: 2;
+                padding: 4% 3%;
+                width: auto;
+                height: auto;
+                color: #262626;
+                text-decoration: none;
+                font-weight: 600;
+                font-size: 32px;
+                opacity: 0.8;
+                cursor: pointer;
+                -webkit-transition: all 0.2s ease;
+                -moz-transition: all 0.2s ease;
+                -ms-transition: all 0.2s ease;
+                -o-transition: all 0.2s ease;
+                transition: all 0.2s ease;
+            }
+            a.control_prev:hover, a.control_next:hover {
+                opacity: 1;
+            }
+            a.control_next {
+                right: 0;
+            }
+            /*Slider (Ends)*/
+        </style>
+    </head>
+    <body>
+        <section>
+            <div id="slider">
+                <a href="#" class="control_next">&#10095;</a>
+                <a href="#" class="control_prev">&#10094;</a>
+                <ul>
+                    <li>
+                        <img src="http://www.nobelprize.org/nobel_prizes/literature/laureates/1995/heaney.jpg"
+                             alt="Seamus Heaney's pic" width="84" height="84">
+                        <p>"The fact of the matter is that the most unexpected and miraculous thing in my life was the arrival in it of poetry itself - as a vocation and an elevation almost."<br/>- Seamus Heaney</p>
+                    </li>
+                    <li>
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Robert_Frost_NYWTS_4.jpg/220px-Robert_Frost_NYWTS_4.jpg"
+                             alt="Robert Frost's pic" width="84" height="84">
+                        <p>"Always fall in with what you're asked to accept. Take what is given, and make it over your way. My aim in life has always been to hold my own with whatever's going. Not against: with."<br/>- Robert Frost</p>
+                    </li>
+                    <li>
+                        <img src="http://quatr.us/greeks/philosophy/pictures/socrates.gif"
+                             alt="Socrates's pic" width="84" height="84">
+                        <p>"It was not wisdom that enabled poets to write their poetry, but a kind of instinct or inspiration, such as you find in seers and prophets who deliver all their sublime messages without knowing what they mean."<br/>- Socrates</p>
+                    </li>
+                </ul>
+            </div>
+        </section>
+        
+        <script src="https://code.jquery.com/jquery-3.0.0.min.js"
+                integrity="sha256-JmvOoLtYsmqlsWxa7mDSLMwa6dZ9rrIdtrrVYRnDRH0="
+                crossorigin="anonymous"></script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                /*Slider (Starts)*/
+                //for auto play
+                setInterval(function () {
+                    moveRight();
+                }, 10000);
+
+                var slider = $('#slider');
+                var slideCount = slider.find('ul li').length;
+                var slideWidth = slider.find('ul li').width();
+                var slideHeight = slider.find('ul li').height();
+                var sliderUlWidth = slideCount * slideWidth;
+
+                slider.css({ width: slideWidth, height: slideHeight });
+
+                slider.find('ul').css({ width: sliderUlWidth, marginLeft: - slideWidth });
+
+                slider.find('ul li:last-child').prependTo('#slider ul');
+
+                function moveLeft() {
+                    slider.find('ul').animate({
+                        left: + slideWidth
+                    }, 500, function () {
+                        slider.find('ul li:last-child').prependTo('#slider ul');
+                        slider.find('ul').css('left', '');
+                    });
+                }
+
+                function moveRight() {
+                    slider.find('ul').animate({
+                        left: - slideWidth
+                    }, 500, function () {
+                        slider.find('ul li:first-child').appendTo('#slider ul');
+                        slider.find('ul').css('left', '');
+                    });
+                }
+
+                $('.control_prev').click(function (e) {
+                    e.preventDefault();
+                    moveLeft();
+                });
+
+                $('.control_next').click(function (e) {
+                    e.preventDefault();
+                    moveRight();
+                });
+                /*Slider (Ends)*/
+            });
+        </script>
+    </body>
+</html>
